@@ -1,28 +1,8 @@
 var express = require("express");
 var path = require("path");
 var fetch = require("node-fetch");
-var Aaaaa = require("./views/functions/api");
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-// var sass = require('node-sass');
-var sass = require("node-sass-middleware");
 var app = express();
-
-// sass.render(
-//   {
-//     file: __dirname + "./style",
-//   },
-//   function (err, result) {
-//     console.log(__dirname + "\\views\\style\\global.sass");
-//   }
-// );
-
-app.use(
-  sass({
-    src: __dirname + "/style",
-    dest: __dirname + "/views",
-    debug: true,
-  })
-);
 
 app.use(express.static(__dirname + "/views"));
 app.set("views", path.join(__dirname, "views"));
@@ -41,7 +21,7 @@ app.use((req, res, next) => {
 //main page
 app.use("/dashboard/:view", async (req, res) => {
   var view = navigate_view(req.params.view);
-
+  draw(res, [], [], [], {}, view);
   //generate data for transaction page
   if (view.page == "transactions") {
     //default transaction filters
